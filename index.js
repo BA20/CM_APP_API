@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 });
 
 //--------------------------------- Login ---------------------------
-
+/*
 //Login
 app.post("/login", (req, res) => {
   const email = req.body.email;
@@ -81,3 +81,4 @@ app.post("/user", (req, res) => {
     }
   });
 });
+*/
