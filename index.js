@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const hostname = "plantme-api.herokuapp.com";
-const port = 3004;
+const port = process.env.PORT || 3004;
 const saltRounds = 10;
 
 app.listen(port, () => {
