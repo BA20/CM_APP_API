@@ -19,19 +19,12 @@ app.get("/", (req, res) => {
   console.log("Olá mundo");
 });
 
+var connection = mysql.createConnection(
+  "mysql://b29adaae436a89:785ca57e@eu-cdbr-west-01.cleardb.com/heroku_e1284fe7bf9d243?reconnect=true"
+);
+connection.connect();
+
 //--------------------------------- Login ---------------------------
-
-const db = mysql.createConnection({
-  host: "plantme-api.herokuapp.com",
-  user: "b29adaae436a89",
-  password: "785ca57e",
-  database: "heroku_e1284fe7bf9d243",
-});
-
-db.connect((err) => {
-  if (err) throw err;
-  console.log("Mysql Connected...");
-});
 
 //Login
 app.post("/login", (req, res) => {
