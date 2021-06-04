@@ -15,13 +15,39 @@ app.listen(port, () => {
 
 //Olá mundo
 
-var db = mysql.createConnection(
-  "mysql://b29adaae436a89:785ca57e@eu-cdbr-west-01.cleardb.com/heroku_e1284fe7bf9d243?reconnect=true"
-);
-db.connect();
+var connection;
+
+function handleDisconnect() {
+  connection = mysql.createConnection(
+    "mysql://b29adaae436a89:785ca57e@eu-cdbr-west-01.cleardb.com/heroku_e1284fe7bf9d243?reconnect=true"
+  ); // Recreate the connection, since
+  // the old one cannot be reused.
+
+  connection.connect(function (err) {
+    // The server is either down
+    if (err) {
+      // or restarting (takes a while sometimes).
+      console.log("error when connecting to db:", err);
+      setTimeout(handleDisconnect, 2000); // We introduce a delay before attempting to reconnect,
+    } // to avoid a hot loop, and to allow our node script to
+  }); // process asynchronous requests in the meantime.
+  // If you're also serving http, display a 503 error.
+  connection.on("error", function (err) {
+    console.log("db error", err);
+    if (err.code === "PROTOCOL_CONNECTION_LOST") {
+      // Connection to the MySQL server is usually
+      handleDisconnect(); // lost due to either server restart, or a
+    } else {
+      // connnection idle timeout (the wait_timeout
+      throw err; // server variable configures this)
+    }
+  });
+}
+
+handleDisconnect();
 
 app.get("/", (req, res) => {
-  db.query("SELECT * FROM user ", (err, result) => {
+  connection.query("SELECT * FROM user ", (err, result) => {
     if (err) {
       res.send(err);
     }
@@ -36,26 +62,30 @@ app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  db.query("SELECT * FROM users WHERE email = ?", email, (err, result) => {
-    if (err) {
-      res.send(err);
-    }
-    if (result.length > 0) {
-      bcrypt.hash(password, saltRounds, (err, hash) => {
-        if (err) {
-          console.log(err);
-        }
-
-        bcrypt.compare(password, result[0].password, (error, response) => {
-          if (response) {
-            res.json({ status: true, email: email });
-          } else {
-            res.json({ status: false });
+  connection.query(
+    "SELECT * FROM users WHERE email = ?",
+    email,
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+      if (result.length > 0) {
+        bcrypt.hash(password, saltRounds, (err, hash) => {
+          if (err) {
+            console.log(err);
           }
+
+          bcrypt.compare(password, result[0].password, (error, response) => {
+            if (response) {
+              res.json({ status: true, email: email });
+            } else {
+              res.json({ status: false });
+            }
+          });
         });
-      });
+      }
     }
-  });
+  );
 });
 
 // ---------------------------- Utilizadores ----------------------------------------------------
@@ -65,30 +95,34 @@ app.post("/user", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  db.query("SELECT * FROM `user` WHERE email = ?", email, (err, result) => {
-    if (err) {
-      res.send(err);
-    }
+  connection.query(
+    "SELECT * FROM `user` WHERE email = ?",
+    email,
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
 
-    if (result.length > 0) {
-      res.send("Já existe um utilizador com esse email");
-    } else {
-      bcrypt.hash(password, saltRounds, (err, hash) => {
-        if (err) {
-          res.send(err);
-        }
-        db.query(
-          "INSERT INTO user (email, password) VALUES (?, ?)",
-          [email, hash],
-          (err, result) => {
-            if (err) {
-              res.send(err);
-            } else {
-              res.send("Registo com sucesso");
-            }
+      if (result.length > 0) {
+        res.send("Já existe um utilizador com esse email");
+      } else {
+        bcrypt.hash(password, saltRounds, (err, hash) => {
+          if (err) {
+            res.send(err);
           }
-        );
-      });
+          connection.query(
+            "INSERT INTO user (email, password) VALUES (?, ?)",
+            [email, hash],
+            (err, result) => {
+              if (err) {
+                res.send(err);
+              } else {
+                res.send("Registo com sucesso");
+              }
+            }
+          );
+        });
+      }
     }
-  });
+  );
 });
