@@ -1,4 +1,5 @@
 const http = require("http");
+const mysql = require("mysql");
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
@@ -19,13 +20,17 @@ app.get("/", (req, res) => {
 });
 
 //--------------------------------- Login ---------------------------
-/*
 
 const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PW,
-  database: process.env.DB_DATABASE,
+  host: "plantme-api.herokuapp.com",
+  user: "b29adaae436a89",
+  password: "785ca57e",
+  database: "heroku_e1284fe7bf9d243",
+});
+
+db.connect((err) => {
+  if (err) throw err;
+  console.log("Mysql Connected...");
 });
 
 //Login
@@ -89,4 +94,3 @@ app.post("/user", (req, res) => {
     }
   });
 });
-*/
