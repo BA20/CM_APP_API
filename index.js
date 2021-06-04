@@ -96,7 +96,7 @@ app.post("/user", (req, res) => {
   const password = req.body.password;
 
   connection.query(
-    "SELECT * FROM `user` WHERE email = ?",
+    "SELECT * FROM user where email= ?;",
     email,
     (err, result) => {
       if (err) {
