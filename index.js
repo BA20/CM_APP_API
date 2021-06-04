@@ -5,12 +5,12 @@ const app = express();
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const hostname = "https://plantme-api.herokuapp.com";
-const port = 3000;
+const port = 3004;
 const saltRounds = 10;
-/*
+
 app.listen(port, () => {
   console.log(`runnig server! http://${hostname}:${port}/`);
-});*/
+});
 
 //Olá mundo
 app.get("/", (req, res) => {
