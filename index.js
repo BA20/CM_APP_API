@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const app = express();
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-const hostname = "https://plantme-api.herokuapp.com";
+const hostname = "plantme-api.herokuapp.com";
 const port = 3000;
 const saltRounds = 10;
 
@@ -20,6 +20,14 @@ app.get("/", (req, res) => {
 
 //--------------------------------- Login ---------------------------
 /*
+
+const db = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PW,
+  database: process.env.DB_DATABASE,
+});
+
 //Login
 app.post("/login", (req, res) => {
   const email = req.body.email;
