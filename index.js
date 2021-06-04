@@ -19,10 +19,10 @@ app.get("/", (req, res) => {
   console.log("Olá mundo");
 });
 
-var connection = mysql.createConnection(
+var db = mysql.createConnection(
   "mysql://b29adaae436a89:785ca57e@eu-cdbr-west-01.cleardb.com/heroku_e1284fe7bf9d243?reconnect=true"
 );
-connection.connect();
+db.connect();
 
 //--------------------------------- Login ---------------------------
 
