@@ -14,19 +14,20 @@ app.listen(port, () => {
 });
 
 //Olá mundo
-app.get("/", (req, res) => {
-  
-  db.query("SELECT * FROM user ",(err, result) => {
-    if (err) {
-      res.send(err);
-    }
-    res.send(result.data)
-});
 
 var db = mysql.createConnection(
   "mysql://b29adaae436a89:785ca57e@eu-cdbr-west-01.cleardb.com/heroku_e1284fe7bf9d243?reconnect=true"
 );
 db.connect();
+
+app.get("/", (req, res) => {
+  db.query("SELECT * FROM user ", (err, result) => {
+    if (err) {
+      res.send(err);
+    }
+    res.send(result.data);
+  });
+});
 
 //--------------------------------- Login ---------------------------
 
