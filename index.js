@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const app = express();
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-const hostname = "127.0.0.1";
+const hostname = "https://plantme-api.herokuapp.com";
 const port = 3000;
 const saltRounds = 10;
 
