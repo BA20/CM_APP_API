@@ -101,7 +101,7 @@ app.post("/user", (req, res) => {
       if (err) {
         res.send(err);
       }
-
+      console.log(result);
       if (result.length > 0) {
         res.send("Já existe um utilizador com esse email");
       } else {
