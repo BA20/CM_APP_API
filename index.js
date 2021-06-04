@@ -2,6 +2,7 @@ const http = require("http");
 const mysql = require("mysql");
 const express = require("express");
 const bodyParser = require("body-parser");
+const bcrypt = require("bcrypt");
 const app = express();
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
