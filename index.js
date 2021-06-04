@@ -15,8 +15,12 @@ app.listen(port, () => {
 
 //Olá mundo
 app.get("/", (req, res) => {
-  res.send("Olá");
-  console.log("Olá mundo");
+  
+  db.query("SELECT * FROM user ",(err, result) => {
+    if (err) {
+      res.send(err);
+    }
+    res.send(result.data)
 });
 
 var db = mysql.createConnection(
