@@ -60,7 +60,7 @@ app.post("/user", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  db.query("SELECT * FROM `users` WHERE email = ?", email, (err, result) => {
+  db.query("SELECT * FROM `user` WHERE email = ?", email, (err, result) => {
     if (err) {
       res.send(err);
     }
@@ -73,7 +73,7 @@ app.post("/user", (req, res) => {
           res.send(err);
         }
         db.query(
-          "INSERT INTO users (email, password) VALUES (?, ?)",
+          "INSERT INTO user (email, password) VALUES (?, ?)",
           [email, hash],
           (err, result) => {
             if (err) {
