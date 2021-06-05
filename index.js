@@ -46,7 +46,7 @@ function handleDisconnect() {
 }
 
 handleDisconnect();
-
+//test
 app.get("/", (req, res) => {
   connection.query("SELECT * FROM user ", (err, result) => {
     if (err) {
