@@ -63,6 +63,7 @@ app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
+  console.log(password);
   connection.query(
     `SELECT * FROM user where email= "${email}"`,
     (err, result) => {
@@ -74,12 +75,12 @@ app.post("/login", (req, res) => {
           if (err) {
             console.log(err);
           }
-
+          console.log(result[0].password);
           bcrypt.compare(password, result[0].password, (error, response) => {
             if (response) {
-              res.json({ status: true, email: email });
+              res.send({ status: true, email: email });
             } else {
-              res.json({ status: false });
+              res.send({ status: false });
             }
           });
         });
@@ -99,6 +100,7 @@ app.post("/user", (req, res) => {
     `SELECT * FROM user where email= "${email}"`,
     (err, result) => {
       if (err) {
+        console.log("DEU ERRO");
         res.send(err);
       }
       console.log(result);
@@ -109,14 +111,16 @@ app.post("/user", (req, res) => {
           if (err) {
             res.send(err);
           }
+          console.log(hash);
           connection.query(
-            "INSERT INTO user (email, password) VALUES (?, ?)",
-            [email, hash],
+            `INSERT INTO user (email, password) VALUES ("${email}", "${hash}")`,
             (err, result) => {
               if (err) {
                 res.send(err);
+                console.log(err);
               } else {
-                res.send("Registo com sucesso");
+                res.send({ res: "Registo com sucesso" });
+                console.log("DEU caralho");
               }
             }
           );
