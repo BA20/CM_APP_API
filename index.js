@@ -64,8 +64,7 @@ app.post("/login", (req, res) => {
   const password = req.body.password;
 
   connection.query(
-    "SELECT * FROM users WHERE email = ?",
-    email,
+    `SELECT * FROM user where email= "${email}"`,
     (err, result) => {
       if (err) {
         res.send(err);
