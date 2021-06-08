@@ -129,3 +129,22 @@ app.post("/user", (req, res) => {
     }
   );
 });
+
+
+// ---------------------------- Plantações ----------------------------------------------------
+
+app.post("/plantacoes/getAll", (req, res) => {
+  const email = req.body.email;
+
+  connection.query(
+    `SELECT * FROM plantacao P, user U WHERE P.id_user = U.idUser and U.email = "${email}"`,
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
