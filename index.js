@@ -133,8 +133,8 @@ app.post("/user", (req, res) => {
 
 // ---------------------------- Plantações ----------------------------------------------------
 
-app.get("/plantacoes/getAll", (req, res) => {
-  const email = req.body.email;
+app.get("/plantacoes/getAll/:email", (req, res) => {
+  const email = req.params.email;
 
   connection.query(
     `SELECT P.* FROM plantacao P, user U WHERE P.id_user = U.idUser and U.email = "${email}"`,
