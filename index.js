@@ -137,13 +137,31 @@ app.get("/plantacoes/getAll", (req, res) => {
   const email = req.body.email;
 
   connection.query(
-    `SELECT * FROM plantacao P, user U WHERE P.id_user = U.idUser and U.email = "${email}"`,
+    `SELECT P.* FROM plantacao P, user U WHERE P.id_user = U.idUser and U.email = "${email}"`,
     (err, result) => {
       if (err) {
         res.send(err);
       }
       else {
-        res.send(result);
+        res.send({status: true, plantacoes: result });
+      }
+    }
+  );
+});
+
+// ---------------------------- Produtos ----------------------------------------------------
+
+app.get("/produto/getById/:id", (req, res) => {
+  const idProduto = req.params.id
+
+  connection.query(
+    `SELECT * FROM produto WHERE idProduto = "${idProduto}"`,
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+      else {
+        res.send({status: true, produto: result });
       }
     }
   );
