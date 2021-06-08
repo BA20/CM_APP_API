@@ -151,7 +151,7 @@ app.get("/plantacoes/getAll/:email", (req, res) => {
 
 // ---------------------------- Produtos ----------------------------------------------------
 
-app.get("/produto/getById/:id", (req, res) => {
+app.get("/produtos/getById/:id", (req, res) => {
   const idProduto = req.params.id
 
   connection.query(
@@ -161,7 +161,7 @@ app.get("/produto/getById/:id", (req, res) => {
         res.send(err);
       }
       else {
-        res.send({status: true, produto: result });
+        res.send({status: true, produto: result[0]});
       }
     }
   );
