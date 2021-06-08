@@ -133,7 +133,7 @@ app.post("/user", (req, res) => {
 
 // ---------------------------- Plantações ----------------------------------------------------
 
-app.post("/plantacoes/getAll", (req, res) => {
+app.get("/plantacoes/getAll", (req, res) => {
   const email = req.body.email;
 
   connection.query(
