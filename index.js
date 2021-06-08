@@ -173,7 +173,7 @@ app.get("/eventos/getLatest/:id", (req, res) => {
   const idPlantacao = req.params.id
 
   connection.query(
-    `SELECT TOP 5 * FROM evento WHERE id_plantacao = "${idPlantacao}" ORDER BY data DESC`,
+    `SELECT * FROM evento WHERE id_plantacao = ${idPlantacao} ORDER BY data DESC LIMIT 5`,
     (err, result) => {
       if (err) {
         res.send(err);
