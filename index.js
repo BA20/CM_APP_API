@@ -78,7 +78,7 @@ app.post("/login", (req, res) => {
           console.log(result[0].password);
           bcrypt.compare(password, result[0].password, (error, response) => {
             if (response) {
-              res.send({ status: true, email: email });
+              res.send({ status: true, email: email, id: result[0].idUser });
             } else {
               res.send({ status: false });
             }
