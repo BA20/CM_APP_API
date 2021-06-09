@@ -137,7 +137,8 @@ app.get("/plantacoes/getAll/:email", (req, res) => {
   const email = req.params.email;
 
   connection.query(
-    `SELECT P.* FROM plantacao P, user U WHERE P.id_user = U.idUser and U.email = "${email}"`,
+    `SELECT P.*, PROD.nomePlanta FROM plantacao P, user U, produto PROD WHERE P.id_user = U.idUser 
+    and P.id_produto = PROD.idProduto and U.email = "${email}"`,
     (err, result) => {
       if (err) {
         res.send(err);
