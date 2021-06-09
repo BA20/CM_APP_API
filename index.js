@@ -189,7 +189,7 @@ app.get("/eventos/getLatest/:id", (req, res) => {
 
 app.get("/sugestoes/getEpocaAtual", (req, res) => {
   connection.query(
-    `SELECT * FROM heroku_e1284fe7bf9d243.sugestao WHERE MONTH(data_inicio) >= MONTH(CURRENT_DATE()) and
+    `SELECT * FROM sugestao WHERE MONTH(data_inicio) >= MONTH(CURRENT_DATE()) and
     DAY(data_inicio) >= DAY(CURRENT_DATE())`,
     (err, result) => {
       if (err) {
@@ -201,3 +201,85 @@ app.get("/sugestoes/getEpocaAtual", (req, res) => {
     }
   );
 });
+
+// ---------------------------- VENDAS ----------------------------------------------------
+
+app.get("/vendas/getAll", (req, res) => {
+  connection.query(
+    `SELECT * FROM venda`,
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+      else {
+        res.send({status: true, vendas: result});
+      }
+    }
+  );
+});
+
+app.get("/vendas/getMes/:mes", (req, res) => {
+  const mes = req.params.mes
+
+  connection.query(
+    `SELECT * FROM venda WHERE MONTH(date) = ${mes}`,
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+      else {
+        res.send({status: true, vendas: result});
+      }
+    }
+  );
+});
+
+app.get("/vendas/getMesAno/:ano-:mes", (req, res) => {
+  const mes = req.params.mes
+  const ano = req.params.ano
+
+  connection.query(
+    `SELECT * FROM heroku_e1284fe7bf9d243.venda WHERE MONTH(date) = ${mes} and YEAR(date) = ${ano};`,
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+      else {
+        res.send({status: true, vendas: result});
+      }
+    }
+  );
+});
+
+app.get("/vendas/getAno/:ano", (req, res) => {
+  const ano = req.params.ano
+
+  connection.query(
+    `SELECT * FROM venda WHERE YEAR(date) = ${ano}`,
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+      else {
+        res.send({status: true, vendas: result});
+      }
+    }
+  );
+});
+
+app.get("/vendas/getPorProduto/:id_produto", (req, res) => {
+  const idProd = req.params.id_produto
+
+  connection.query(
+    `SELECT * FROM venda WHERE id_produto = ${idProd};`,
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+      else {
+        res.send({status: true, vendas: result});
+      }
+    }
+  );
+});
+
