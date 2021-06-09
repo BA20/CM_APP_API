@@ -184,3 +184,20 @@ app.get("/eventos/getLatest/:id", (req, res) => {
     }
   );
 });
+
+// ---------------------------- SUGESTÕES ----------------------------------------------------
+
+app.get("/sugestoes/getEpocaAtual", (req, res) => {
+  connection.query(
+    `SELECT * FROM heroku_e1284fe7bf9d243.sugestao WHERE MONTH(data_inicio) >= MONTH(CURRENT_DATE()) and
+    DAY(data_inicio) > DAY(CURRENT_DATE())`,
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+      else {
+        res.send({status: true, sugestoes: result});
+      }
+    }
+  );
+});
