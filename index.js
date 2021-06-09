@@ -283,3 +283,37 @@ app.get("/vendas/getPorProduto/:id_produto", (req, res) => {
   );
 });
 
+// ---------------------------- ALERTAS ----------------------------------------------------
+
+app.get("/alertas/getAllUser/:id_user", (req, res) => {
+  const idUser = req.params.id_user
+
+  connection.query(
+    `SELECT * FROM alerta WHERE id_user = ${idUser};`,
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+      else {
+        res.send({status: true, vendas: result});
+      }
+    }
+  );
+});
+
+app.get("/alertas/getAllPlantacao/:id_user-:id_plantacao", (req, res) => {
+  const idUser = req.params.id_user
+  const idPlantacao = req.params.id_plantacao
+
+  connection.query(
+    `SELECT * FROM alerta WHERE id_user = ${idUser} and id_plantacao = ${idPlantacao};`,
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+      else {
+        res.send({status: true, vendas: result});
+      }
+    }
+  );
+});
