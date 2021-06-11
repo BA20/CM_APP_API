@@ -4,12 +4,15 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const app = express();
+const axios = require("axios");
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const hostname = "plantme-api.herokuapp.com";
 const port = process.env.PORT || 3004;
 const saltRounds = 10;
 
+//const hostname = "localhost";
+//const port = 3004;
 app.listen(port, () => {
   console.log(`runnig server! http://${hostname}:${port}/`);
 });
@@ -311,7 +314,7 @@ app.get("/meteorologia/:lat/:lng", (req, res) => {
 
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=bbbeb5909216a1fb4708287193a9c88d`;
   try {
-    const res = await axios.get(url);
+    const res = axios.get(url);
     console.log(res.data);
   } catch (err) {
     console.log(err);
