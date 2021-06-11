@@ -231,7 +231,8 @@ app.get("/vendas/getMesAno/:ano-:mes", (req, res) => {
   const ano = req.params.ano;
 
   connection.query(
-    `SELECT V.*, P.nomePlanta FROM venda V, produto P WHERE MONTH(date) = ${mes} and YEAR(date) = ${ano} and V.id_produto = P.idProduto`,
+    `SELECT venda.*, produto.nomePlanta FROM heroku_e1284fe7bf9d243.venda, heroku_e1284fe7bf9d243.produto 
+    WHERE MONTH(date) = ${mes} and YEAR(date) = ${ano} and venda.id_produto = produto.idProduto group by id_produto`,
     (err, result) => {
       if (err) {
         res.send(err);
