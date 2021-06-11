@@ -223,7 +223,7 @@ app.get("/vendas/getMes/:mes", (req, res) => {
   const mes = req.params.mes
 
   connection.query(
-    `SELECT * FROM venda WHERE MONTH(date) = ${mes}`,
+    `SELECT V.*, P.nomePlanta FROM venda V, produto P WHERE MONTH(date) = ${mes} and V.id_produto = P.id_produto`,
     (err, result) => {
       if (err) {
         res.send(err);
@@ -240,7 +240,8 @@ app.get("/vendas/getMesAno/:ano-:mes", (req, res) => {
   const ano = req.params.ano
 
   connection.query(
-    `SELECT * FROM heroku_e1284fe7bf9d243.venda WHERE MONTH(date) = ${mes} and YEAR(date) = ${ano};`,
+    `SELECT V.*, P.nomePlanta FROM venda V, produto P WHERE MONTH(date) = ${mes} and YEAR(date) = ${ano} and \
+    V.id_produto = P.id_produto`,
     (err, result) => {
       if (err) {
         res.send(err);
@@ -256,7 +257,7 @@ app.get("/vendas/getAno/:ano", (req, res) => {
   const ano = req.params.ano
 
   connection.query(
-    `SELECT * FROM venda WHERE YEAR(date) = ${ano}`,
+    `SELECT V.*, P.nomePlanta FROM venda WHERE YEAR(date) = ${ano} and V.id_produto = P.id_produto`,
     (err, result) => {
       if (err) {
         res.send(err);
@@ -272,7 +273,7 @@ app.get("/vendas/getPorProduto/:id_produto", (req, res) => {
   const idProd = req.params.id_produto
 
   connection.query(
-    `SELECT * FROM venda WHERE id_produto = ${idProd};`,
+    `SELECT V.*, P.nomePlanta FROM venda V, produto P WHERE id_produto = ${idProd} and V.id_produto = P.id_produto`,
     (err, result) => {
       if (err) {
         res.send(err);
