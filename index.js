@@ -202,13 +202,16 @@ app.get("/sugestoes/getEpocaAtual", (req, res) => {
 // ---------------------------- VENDAS ----------------------------------------------------
 
 app.get("/vendas/getAll", (req, res) => {
-  connection.query(`SELECT *, P.nomePlanta FROM venda V, produto P WHERE V.id_produto = P.idProduto`, (err, result) => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send({ status: true, vendas: result });
+  connection.query(
+    `SELECT *, P.nomePlanta FROM venda V, produto P WHERE V.id_produto = P.idProduto`,
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send({ status: true, vendas: result });
+      }
     }
-  });
+  );
 });
 
 app.get("/vendas/getMes/:mes", (req, res) => {
@@ -310,7 +313,7 @@ app.get("/meteorologia/:lat/:lng", (req, res) => {
   const lat = req.params.lat;
   const lng = req.params.lng;
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=bbbeb5909216a1fb4708287193a9c88d`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=bbbeb5909216a1fb4708287193a9c88d&units=metric`;
   try {
     axios
       .get(url)
