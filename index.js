@@ -204,7 +204,7 @@ app.get("/sugestoes/getEpocaAtual", (req, res) => {
 // ---------------------------- VENDAS ----------------------------------------------------
 
 app.get("/vendas/getAll", (req, res) => {
-  connection.query(`SELECT * FROM venda`, (err, result) => {
+  connection.query(`SELECT *, P.nomePlanta FROM venda V, produto P WHERE V.id_produto = P.idProduto`, (err, result) => {
     if (err) {
       res.send(err);
     } else {
@@ -217,7 +217,7 @@ app.get("/vendas/getMes/:mes", (req, res) => {
   const mes = req.params.mes;
 
   connection.query(
-    `SELECT V.*, P.nomePlanta FROM venda V, produto P WHERE MONTH(date) = ${mes} and V.idProduto = P.idProduto`,
+    `SELECT V.*, P.nomePlanta FROM venda V, produto P WHERE MONTH(date) = ${mes} and V.id_produto = P.idProduto`,
     (err, result) => {
       if (err) {
         res.send(err);
@@ -233,7 +233,7 @@ app.get("/vendas/getMesAno/:ano-:mes", (req, res) => {
   const ano = req.params.ano;
 
   connection.query(
-    `SELECT V.*, P.nomePlanta FROM venda V, produto P WHERE MONTH(date) = ${mes} and YEAR(date) = ${ano} and V.idProduto = P.idProduto`,
+    `SELECT V.*, P.nomePlanta FROM venda V, produto P WHERE MONTH(date) = ${mes} and YEAR(date) = ${ano} and V.id_produto = P.idProduto`,
     (err, result) => {
       if (err) {
         res.send(err);
@@ -248,7 +248,7 @@ app.get("/vendas/getAno/:ano", (req, res) => {
   const ano = req.params.ano;
 
   connection.query(
-    `SELECT V.*, P.nomePlanta FROM venda WHERE YEAR(date) = ${ano} and V.idProduto = P.idProduto`,
+    `SELECT V.*, P.nomePlanta FROM venda WHERE YEAR(date) = ${ano} and V.id_produto = P.idProduto`,
     (err, result) => {
       if (err) {
         res.send(err);
