@@ -229,7 +229,7 @@ app.get("/vendas/getMes/:mes", (req, res) => {
   );
 });
 
-app.get("/vendas/getMesAno/:ano-:mes", (req, res) => {
+app.get("/vendas/getMesAno/:ano/:mes", (req, res) => {
   const mes = req.params.mes;
   const ano = req.params.ano;
 
