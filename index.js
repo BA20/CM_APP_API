@@ -310,19 +310,10 @@ app.get("/meteorologia/:lat/:lng", (req, res) => {
   const lng = req.params.lng;
 
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=bbbeb5909216a1fb4708287193a9c88d`;
-
-  https
-    .get(url, (resp) => {
-      let data = "";
-      resp.on("data", (chunk) => {
-        data += chunk;
-      });
-
-      resp.on("end", () => {
-        res.send({ status: true, meteo: JSON.parse(data) });
-      });
-    })
-    .on("error", (err) => {
-      console.log("Error: " + err.message);
-    });
+  try {
+    const res = await axios.get(url);
+    console.log(res.data);
+  } catch (err) {
+    console.log(err);
+  }
 });
