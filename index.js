@@ -230,8 +230,7 @@ app.get("/vendas/getMesAno/:ano-:mes", (req, res) => {
   const ano = req.params.ano;
 
   connection.query(
-    `SELECT V.*, P.nomePlanta FROM venda V, produto P WHERE MONTH(date) = ${mes} and YEAR(date) = ${ano} and \
-    V.id_produto = P.id_produto`,
+    `SELECT V.*, P.nomePlanta FROM venda V, produto P WHERE MONTH(date) = ${mes} and YEAR(date) = ${ano} and V.id_produto = P.id_produto`,
     (err, result) => {
       if (err) {
         res.send(err);
