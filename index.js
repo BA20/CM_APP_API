@@ -130,7 +130,6 @@ app.post("/user", (req, res) => {
   );
 });
 
-
 // ---------------------------- Plantações ----------------------------------------------------
 
 app.get("/plantacoes/getAll/:email", (req, res) => {
@@ -142,9 +141,8 @@ app.get("/plantacoes/getAll/:email", (req, res) => {
     (err, result) => {
       if (err) {
         res.send(err);
-      }
-      else {
-        res.send({status: true, plantacoes: result });
+      } else {
+        res.send({ status: true, plantacoes: result });
       }
     }
   );
@@ -153,16 +151,15 @@ app.get("/plantacoes/getAll/:email", (req, res) => {
 // ---------------------------- Produtos ----------------------------------------------------
 
 app.get("/produtos/getById/:id", (req, res) => {
-  const idProduto = req.params.id
+  const idProduto = req.params.id;
 
   connection.query(
     `SELECT * FROM produto WHERE idProduto = "${idProduto}"`,
     (err, result) => {
       if (err) {
         res.send(err);
-      }
-      else {
-        res.send({status: true, produto: result[0]});
+      } else {
+        res.send({ status: true, produto: result[0] });
       }
     }
   );
@@ -171,16 +168,15 @@ app.get("/produtos/getById/:id", (req, res) => {
 // ---------------------------- Eventos ----------------------------------------------------
 
 app.get("/eventos/getLatest/:id", (req, res) => {
-  const idPlantacao = req.params.id
+  const idPlantacao = req.params.id;
 
   connection.query(
     `SELECT * FROM evento WHERE id_plantacao = ${idPlantacao} ORDER BY data DESC LIMIT 5`,
     (err, result) => {
       if (err) {
         res.send(err);
-      }
-      else {
-        res.send({status: true, eventos: result});
+      } else {
+        res.send({ status: true, eventos: result });
       }
     }
   );
@@ -195,9 +191,8 @@ app.get("/sugestoes/getEpocaAtual", (req, res) => {
     (err, result) => {
       if (err) {
         res.send(err);
-      }
-      else {
-        res.send({status: true, sugestoes: result});
+      } else {
+        res.send({ status: true, sugestoes: result });
       }
     }
   );
@@ -206,38 +201,33 @@ app.get("/sugestoes/getEpocaAtual", (req, res) => {
 // ---------------------------- VENDAS ----------------------------------------------------
 
 app.get("/vendas/getAll", (req, res) => {
-  connection.query(
-    `SELECT * FROM venda`,
-    (err, result) => {
-      if (err) {
-        res.send(err);
-      }
-      else {
-        res.send({status: true, vendas: result});
-      }
+  connection.query(`SELECT * FROM venda`, (err, result) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send({ status: true, vendas: result });
     }
-  );
+  });
 });
 
 app.get("/vendas/getMes/:mes", (req, res) => {
-  const mes = req.params.mes
+  const mes = req.params.mes;
 
   connection.query(
     `SELECT V.*, P.nomePlanta FROM venda V, produto P WHERE MONTH(date) = ${mes} and V.id_produto = P.id_produto`,
     (err, result) => {
       if (err) {
         res.send(err);
-      }
-      else {
-        res.send({status: true, vendas: result});
+      } else {
+        res.send({ status: true, vendas: result });
       }
     }
   );
 });
 
 app.get("/vendas/getMesAno/:ano-:mes", (req, res) => {
-  const mes = req.params.mes
-  const ano = req.params.ano
+  const mes = req.params.mes;
+  const ano = req.params.ano;
 
   connection.query(
     `SELECT V.*, P.nomePlanta FROM venda V, produto P WHERE MONTH(date) = ${mes} and YEAR(date) = ${ano} and \
@@ -245,41 +235,38 @@ app.get("/vendas/getMesAno/:ano-:mes", (req, res) => {
     (err, result) => {
       if (err) {
         res.send(err);
-      }
-      else {
-        res.send({status: true, vendas: result});
+      } else {
+        res.send({ status: true, vendas: result });
       }
     }
   );
 });
 
 app.get("/vendas/getAno/:ano", (req, res) => {
-  const ano = req.params.ano
+  const ano = req.params.ano;
 
   connection.query(
     `SELECT V.*, P.nomePlanta FROM venda WHERE YEAR(date) = ${ano} and V.id_produto = P.id_produto`,
     (err, result) => {
       if (err) {
         res.send(err);
-      }
-      else {
-        res.send({status: true, vendas: result});
+      } else {
+        res.send({ status: true, vendas: result });
       }
     }
   );
 });
 
 app.get("/vendas/getPorProduto/:id_produto", (req, res) => {
-  const idProd = req.params.id_produto
+  const idProd = req.params.id_produto;
 
   connection.query(
     `SELECT V.*, P.nomePlanta FROM venda V, produto P WHERE id_produto = ${idProd} and V.id_produto = P.id_produto`,
     (err, result) => {
       if (err) {
         res.send(err);
-      }
-      else {
-        res.send({status: true, vendas: result});
+      } else {
+        res.send({ status: true, vendas: result });
       }
     }
   );
@@ -288,33 +275,31 @@ app.get("/vendas/getPorProduto/:id_produto", (req, res) => {
 // ---------------------------- ALERTAS ----------------------------------------------------
 
 app.get("/alertas/getAllUser/:id_user", (req, res) => {
-  const idUser = req.params.id_user
+  const idUser = req.params.id_user;
 
   connection.query(
     `SELECT * FROM alerta WHERE id_user = ${idUser};`,
     (err, result) => {
       if (err) {
         res.send(err);
-      }
-      else {
-        res.send({status: true, vendas: result});
+      } else {
+        res.send({ status: true, vendas: result });
       }
     }
   );
 });
 
 app.get("/alertas/getAllPlantacao/:id_user-:id_plantacao", (req, res) => {
-  const idUser = req.params.id_user
-  const idPlantacao = req.params.id_plantacao
+  const idUser = req.params.id_user;
+  const idPlantacao = req.params.id_plantacao;
 
   connection.query(
     `SELECT * FROM alerta WHERE id_user = ${idUser} and id_plantacao = ${idPlantacao};`,
     (err, result) => {
       if (err) {
         res.send(err);
-      }
-      else {
-        res.send({status: true, vendas: result});
+      } else {
+        res.send({ status: true, vendas: result });
       }
     }
   );
@@ -322,22 +307,14 @@ app.get("/alertas/getAllPlantacao/:id_user-:id_plantacao", (req, res) => {
 
 // ---------------------------- OBTER METEOROLOGIA ----------------------------------------------------
 app.get("/meteorologia/:lat/:lng", (req, res) => {
-  const lat = req.params.lat
-  const lng = req.params.lng
+  const lat = req.params.lat;
+  const lng = req.params.lng;
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=bbbeb5909216a1fb4708287193a9c88d`
-
-  https.get(url, (resp) => {
-  let data = '';
-  resp.on('data', (chunk) => {
-    data += chunk;
-  });
-
-  resp.on('end', () => {
-    res.send({status: true, meteo: JSON.parse(data)});
-  });
-
-  }).on("error", (err) => {
-    console.log("Error: " + err.message);
-  });
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=bbbeb5909216a1fb4708287193a9c88d`;
+  try {
+    const res = await axios.get(url);
+    console.log(res.data);
+  } catch (err) {
+    console.log(err);
+  }
 });
