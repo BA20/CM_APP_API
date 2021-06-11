@@ -217,7 +217,7 @@ app.get("/vendas/getMes/:mes", (req, res) => {
   const mes = req.params.mes;
 
   connection.query(
-    `SELECT V.*, P.nomePlanta FROM venda V, produto P WHERE MONTH(date) = ${mes} and V.id_produto = P.id_produto`,
+    `SELECT V.*, P.nomePlanta FROM venda V, produto P WHERE MONTH(date) = ${mes} and V.idProduto = P.idProduto`,
     (err, result) => {
       if (err) {
         res.send(err);
@@ -233,7 +233,7 @@ app.get("/vendas/getMesAno/:ano-:mes", (req, res) => {
   const ano = req.params.ano;
 
   connection.query(
-    `SELECT V.*, P.nomePlanta FROM venda V, produto P WHERE MONTH(date) = ${mes} and YEAR(date) = ${ano} and V.id_produto = P.id_produto`,
+    `SELECT V.*, P.nomePlanta FROM venda V, produto P WHERE MONTH(date) = ${mes} and YEAR(date) = ${ano} and V.idProduto = P.idProduto`,
     (err, result) => {
       if (err) {
         res.send(err);
@@ -248,7 +248,7 @@ app.get("/vendas/getAno/:ano", (req, res) => {
   const ano = req.params.ano;
 
   connection.query(
-    `SELECT V.*, P.nomePlanta FROM venda WHERE YEAR(date) = ${ano} and V.id_produto = P.id_produto`,
+    `SELECT V.*, P.nomePlanta FROM venda WHERE YEAR(date) = ${ano} and V.idProduto = P.idProduto`,
     (err, result) => {
       if (err) {
         res.send(err);
@@ -263,7 +263,7 @@ app.get("/vendas/getPorProduto/:id_produto", (req, res) => {
   const idProd = req.params.id_produto;
 
   connection.query(
-    `SELECT V.*, P.nomePlanta FROM venda V, produto P WHERE id_produto = ${idProd} and V.id_produto = P.id_produto`,
+    `SELECT V.*, P.nomePlanta FROM venda V, produto P WHERE id_produto = ${idProd} and V.idProduto = P.idProduto`,
     (err, result) => {
       if (err) {
         res.send(err);
