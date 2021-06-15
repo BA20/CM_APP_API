@@ -282,7 +282,7 @@ app.get("/alertas/getAllUser/:id_user", (req, res) => {
   const idUser = req.params.id_user;
 
   connection.query(
-    `SELECT * FROM alerta WHERE id_user = ${idUser} and data_alerta >= now();`,
+    `SELECT * FROM alerta WHERE id_user = ${idUser} and data_alerta >= now() ORDER BY data_alerta ASC;`,
     (err, result) => {
       if (err) {
         res.send(err);
@@ -298,7 +298,7 @@ app.get("/alertas/getAllPlantacao/:id_user-:id_plantacao", (req, res) => {
   const idPlantacao = req.params.id_plantacao;
 
   connection.query(
-    `SELECT * FROM alerta WHERE id_user = ${idUser} and id_plantacao = ${idPlantacao} and data_alerta >= now();;`,
+    `SELECT * FROM alerta WHERE id_user = ${idUser} and id_plantacao = ${idPlantacao} and data_alerta >= now() ORDER BY data_alerta ASC;`,
     (err, result) => {
       if (err) {
         res.send(err);
