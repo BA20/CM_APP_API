@@ -287,7 +287,7 @@ app.get("/alertas/getAllUser/:id_user", (req, res) => {
       if (err) {
         res.send(err);
       } else {
-        res.send({ status: true, vendas: result });
+        res.send({ status: true, alertas: result });
       }
     }
   );
@@ -303,7 +303,7 @@ app.get("/alertas/getAllPlantacao/:id_user-:id_plantacao", (req, res) => {
       if (err) {
         res.send(err);
       } else {
-        res.send({ status: true, vendas: result });
+        res.send({ status: true, alertas: result });
       }
     }
   );
