@@ -201,7 +201,7 @@ app.get("/sugestoes/getEpocaAtual", (req, res) => {
 
 app.get("/vendas/getAll", (req, res) => {
   connection.query(
-    `SELECT *, P.nomePlanta FROM venda V, produto P WHERE V.id_produto = P.idProduto`,
+    `SELECT *, P.nomePlanta FROM venda V, produto P WHERE V.id_produto = P.idProduto group by id_produto`,
     (err, result) => {
       if (err) {
         res.send(err);
