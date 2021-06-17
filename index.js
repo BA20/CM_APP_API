@@ -101,7 +101,6 @@ app.post("/user", (req, res) => {
     `SELECT * FROM user where email= "${email}"`,
     (err, result) => {
       if (err) {
-        console.log("DEU ERRO");
         res.send(err);
       }
       console.log(result);
@@ -121,7 +120,6 @@ app.post("/user", (req, res) => {
                 console.log(err);
               } else {
                 res.send({ res: "Registo com sucesso" });
-                console.log("DEU caralho");
               }
             }
           );
